@@ -44,7 +44,7 @@ const show = async (req, res) => {
  *
  * POST /
  */
- const store = async (req, res) => {
+const store = async (req, res) => {
 	// check for any validation errors
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -74,13 +74,12 @@ const show = async (req, res) => {
 	}
 }
 
-
 /**
  * Update a specific resource
  *
- * POST /:bookId
+ * PUT /:bookId
  */
- const update = async (req, res) => {
+const update = async (req, res) => {
 	const bookId = req.params.bookId;
 
 	// make sure book exists
@@ -93,6 +92,7 @@ const show = async (req, res) => {
 		});
 		return;
 	}
+
 	// check for any validation errors
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -121,6 +121,7 @@ const show = async (req, res) => {
 		throw error;
 	}
 }
+
 /**
  * Destroy a specific resource
  *

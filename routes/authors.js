@@ -1,19 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const authorController = require('../controllers/author_controller');
-const authorValidationRules = require('../validation/author.js');
-
-
-//5 olika requests vi kan göra mot authors
+const authorValidationRules = require('../validation/author');
 
 /* Get all resources */
-router.get('/', authorController.index); //visar index över allt
+router.get('/', authorController.index);
 
 /* Get a specific resource */
-router.get('/:authorId', authorController.show); //vi vill hämta en specifik resurs
+router.get('/:authorId', authorController.show);
 
 /* Store a new resource */
-router.post('/', authorValidationRules.createRules, authorController.store); //store hade kunnat heta save el create
+router.post('/', authorValidationRules.createRules, authorController.store);
 
 /* Update a specific resource */
 router.put('/:authorId', authorValidationRules.updateRules, authorController.update);

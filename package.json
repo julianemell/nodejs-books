@@ -10,7 +10,6 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bookshelf": "^1.2.0",
-    "bookshelf-relations": "^2.3.0",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^16.0.0",
@@ -23,9 +22,5 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "nodemon": "^2.0.15"
-  },
-  "main": "app.js",
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  }
 }

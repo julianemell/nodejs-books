@@ -3,17 +3,25 @@ const router = express.Router();
 const profileController = require('../controllers/profile_controller');
 const profileValidationRules = require('../validation/profile');
 
-//get user profile
+/**
+ * Get authenticated user's profile
+ */
 router.get('/', profileController.getProfile);
 
-//uppdatera uppgifter
-//add validation rules
+/**
+ * Update authenticated user's profile
+ */
 router.put('/', profileValidationRules.updateRules, profileController.updateProfile);
 
-router.post('/books', profileValidationRules.addBookRules, profileController.addBook);
-
-
-//get user's books
+/**
+ * Get authenticated user's books
+ */
 router.get('/books', profileController.getBooks);
+
+/**
+ * Add a book to the authenticated user
+ *
+ */
+router.post('/books', profileValidationRules.addBookRules, profileController.addBook);
 
 module.exports = router;

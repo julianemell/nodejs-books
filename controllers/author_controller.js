@@ -3,9 +3,8 @@
  */
 
 const debug = require('debug')('books:author_controller');
-const models = require('../models');
 const { matchedData, validationResult } = require('express-validator');
-
+const models = require('../models');
 
 /**
  * Get all resources
@@ -29,8 +28,8 @@ const index = async (req, res) => {
  * GET /:authorId
  */
 const show = async (req, res) => {
-	const author = await new models.Author({ id: req.params.authorId }) //authorId kommer från routern
-		.fetch({ withRelated: ['books'] }); //hämta författaren och dess böcker
+	const author = await new models.Author({ id: req.params.authorId })
+		.fetch({ withRelated: ['books'] });
 
 	res.send({
 		status: 'success',
@@ -46,12 +45,14 @@ const show = async (req, res) => {
  * POST /
  */
 const store = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(422).send({ status: 'fail', data: errors.array() });
-    }
+	// check for any validation errors
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).send({ status: 'fail', data: errors.array() });
+	}
 
-    const validData = matchedData(req);
+	// get only the validated data from the request
+	const validData = matchedData(req);
 
 	try {
 		const author = await new models.Author(validData).save();
@@ -76,12 +77,12 @@ const store = async (req, res) => {
 /**
  * Update a specific resource
  *
- * POST /:authorId
+ * PUT /:authorId
  */
 const update = async (req, res) => {
 	const authorId = req.params.authorId;
 
-	// make sure user exists
+	// make sure author exists
 	const author = await new models.Author({ id: authorId }).fetch({ require: false });
 	if (!author) {
 		debug("Author to update was not found. %o", { id: authorId });
@@ -91,12 +92,15 @@ const update = async (req, res) => {
 		});
 		return;
 	}
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(422).send({ status: 'fail', data: errors.array() });
-    }
 
-    const validData = matchedData(req);
+	// check for any validation errors
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).send({ status: 'fail', data: errors.array() });
+	}
+
+	// get only the validated data from the request
+	const validData = matchedData(req);
 
 	try {
 		const updatedAuthor = await author.save(validData);
@@ -135,5 +139,5 @@ module.exports = {
 	show,
 	store,
 	update,
-	destroy
+	destroy,
 }
